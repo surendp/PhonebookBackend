@@ -1,9 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const { request } = require('express')
 const app = express()
 
-app.use(cors())
 app.use(express.json())
 app.use(morgan(function (tokens, req, res) {
   return [
@@ -17,6 +17,8 @@ app.use(morgan(function (tokens, req, res) {
     JSON.stringify(req.body),
   ].join(' ')
 }))
+app.use(cors())
+app.use(express.static('build'))
 
 let persons = [
   {
@@ -88,7 +90,7 @@ app.post('/api/persons', (request, response) => {
 
   const id = Math.floor(Math.random() * 1000000000)
   persons = [...persons, { name, number , id }]
-  return response.status(201).end()
+  return response.status(201).send({ name, number , id })
 })
 
 const port = process.env.PORT || 3001
