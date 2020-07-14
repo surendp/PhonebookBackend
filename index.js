@@ -81,16 +81,10 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.post('/api/persons', (request, response, next) => {
   const { name, number } = request.body
-  // const personExists = persons.find(person => person.name === name)
 
   if (!(name && number)) {
     return response.status(400).send({ error: 'Please provide valid name and number'})
   }
-
-/*   if (personExists) {
-    return response.status(400).send({ error: 'The name already exists in the Phone book'})
-  }
- */
 
   const person = new Person({
     name,
